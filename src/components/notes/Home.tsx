@@ -4,13 +4,20 @@ import axios from "axios";
 import { Link } from "react-router";
 import { API_BASE_URL } from "../../config";
 
+type Note = {
+  _id: string;
+  title: string;
+  type: string;
+  link: string;
+};
+
 const Home = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
     async function getnotes() {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/content/`, {
+        const res = await axios.get<Note[]>(`${API_BASE_URL}/api/content/`, {
           withCredentials: true,
         });
         setNotes(res.data);
@@ -22,12 +29,12 @@ const Home = () => {
     getnotes();
   }, []);
 
-  const deleteHandler = async (id) => {
+  const deleteHandler = async (id: string) => {
     try {
       await axios.delete(`${API_BASE_URL}/api/content/${id}`, {
         withCredentials: true,
       });
-      const res = await axios.get(`${API_BASE_URL}/api/content/`, {
+      const res = await axios.get<Note[]>(`${API_BASE_URL}/api/content/`, {
         withCredentials: true,
       });
       setNotes(res.data);
@@ -36,7 +43,7 @@ const Home = () => {
     }
   };
 
-  const shareHandler = async (id) => {
+  const shareHandler = async (id: string) => {
     try {
       const res = await axios.post(
         `${API_BASE_URL}/api/content/share`,
