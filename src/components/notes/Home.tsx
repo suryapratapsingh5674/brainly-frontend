@@ -52,7 +52,7 @@ const Home = () => {
       );
       console.log(res);
       alert(
-        `Copy link to share : http://localhost:5173/share/${res.data.link.hash}`,
+        `Copy link to share : https://brainly-frontend-phi-eight.vercel.app/share/${res.data.link.hash}`,
       );
     } catch (err) {
       console.error(err);
